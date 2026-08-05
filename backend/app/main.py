@@ -23,18 +23,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "https://udiap.vercel.app",
-        "http://localhost:3000",
-        "http://localhost:5173",
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-    title=settings.APP_NAME,
+title=settings.APP_NAME,
     version=settings.APP_VERSION,
     description=(
         "Universal Decision Intelligence Assessment Platform – "
@@ -57,6 +46,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 app.include_router(api_router, prefix=settings.API_PREFIX)
 
