@@ -13,3 +13,4 @@ python-multipart==0.0.9
 email-validator==2.2.0
 python-dotenv==1.0.1
 loguru==0.7.2
+asyncpg==0.29.0
