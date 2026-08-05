@@ -1,0 +1,28 @@
+databases:
+  - name: udiap-db
+    plan: free
+    databaseName: udiap_db
+    user: udiap
+
+services:
+  - type: web
+    name: udiap-backend
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app.main:app -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT"
+    healthCheckPath: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: "false"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: udiap-db
+          property: connectionString
+      - key: CORS_ORIGINS
+        value: '["https://YOUR-FRONTEND.vercel.app"]'
