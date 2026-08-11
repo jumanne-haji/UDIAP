@@ -13,11 +13,8 @@ from app.api import api_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: create tables (in production use Alembic)
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    # Database schema is managed exclusively by Alembic.
     yield
-    # Shutdown
     await engine.dispose()
 
 
@@ -64,3 +61,27 @@ async def root():
 @app.get("/health")
 async def health():
     return {"status": "healthy"}
+
+
+@app.get("/ready")
+async def readiness():
+    """Database readiness probe."""
+    from sqlalchemy import text
+    from app.core.database import AsyncSessionLocal
+
+    try:
+        async with AsyncSessionLocal() as db:
+            await db.execute(text("SELECT 1"))
+        return {
+            "status": "ready",
+            "database": "connected",
+        }
+    except Exception:
+        from fastapi import HTTPException, status
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail={
+                "status": "not_ready",
+                "database": "disconnected",
+            },
+        )
