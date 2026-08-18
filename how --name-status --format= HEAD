@@ -1,0 +1,3 @@
+[33m11295617[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Add database readiness endpoint and remove startup schema creation
+ backend/app/main.py | 29 [32m+++++++++++++++++++++++++[m[31m----[m
+ 1 file changed, 25 insertions(+), 4 deletions(-)

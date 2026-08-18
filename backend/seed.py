@@ -4,17 +4,13 @@ Run: python -m seed  (from backend/ with PYTHONPATH set)
 """
 
 import asyncio
-from sqlalchemy.ext.asyncio import AsyncSession
-from app.core.database import AsyncSessionLocal, engine, Base
+from app.core.database import AsyncSessionLocal
 from app.models.user import User, UserRole
 from app.models.assessment import Assessment, Question, AssessmentCategory, DifficultyLevel
 from app.core.security import get_password_hash
 
 
 async def seed():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
     async with AsyncSessionLocal() as db:
         # Admin user
         admin = User(

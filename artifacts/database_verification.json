@@ -1,0 +1,4 @@
+{
+  "alembic_found": true,
+  "postgres_live_test": "BLOCKED (No active Docker/Postgres container in local Termux)"
+}

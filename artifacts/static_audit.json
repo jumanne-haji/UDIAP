@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "component": "backend_structure",
+      "passed": true
+    },
+    {
+      "component": "frontend_structure",
+      "passed": true
+    }
+  ]
+}
